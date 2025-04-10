@@ -19,18 +19,26 @@ async function bootstrap() {
 
   const appConfig = app.get(AppConfig);
   const logger = new Logger('Bootstrap');
-  const PORT = appConfig.port;
+  const PORT = appConfig.port;;
 
   if (!appConfig.isProduction) {
-    const documentConfig = new DocumentBuilder()
-      .setTitle('Travel service')
+    const config = new DocumentBuilder()
+      .setTitle('Travel - Builder Service')
+      .setDescription('Сервис Builder')
+      .setVersion('1.0')
+      .addTag('doc.json')
+      .addApiKey(
+        {
+          type: 'apiKey',
+          name: 'authorization',
+        },
+        'oneid',
+      )
       .build();
-
-    SwaggerModule.setup(
-      'swagger',
-      app,
-      SwaggerModule.createDocument(app, documentConfig),
-    );
+    const document = SwaggerModule.createDocument(app, config, {
+      ignoreGlobalPrefix: false,
+    });
+    SwaggerModule.setup('/api/swagger', app, document);
   }
 
   await app.listen(PORT, '0.0.0.0', () => {
