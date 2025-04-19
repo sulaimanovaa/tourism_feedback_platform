@@ -22,15 +22,25 @@ async function bootstrap() {
   const PORT = appConfig.port;
 
   if (!appConfig.isProduction) {
-    const documentConfig = new DocumentBuilder()
-      .setTitle('Travel service')
+    const config = new DocumentBuilder()
+      .setTitle('Travel Review Platform - Builder Service')
+      .setDescription('Разработка веб-системы отзывов и рекомендаций для туристических услуг')
+      .setVersion('1.0')
+      .addTag('doc.json')
+      .addBearerAuth(
+        {
+          type: 'http',
+          in: 'header',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+        'auth',
+      )
       .build();
-
-    SwaggerModule.setup(
-      'swagger',
-      app,
-      SwaggerModule.createDocument(app, documentConfig),
-    );
+    const document = SwaggerModule.createDocument(app, config, {
+      ignoreGlobalPrefix: false,
+    });
+    SwaggerModule.setup('/api/swagger', app, document);
   }
 
   await app.listen(PORT, '0.0.0.0', () => {
