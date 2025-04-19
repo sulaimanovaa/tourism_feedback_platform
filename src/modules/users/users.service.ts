@@ -1,28 +1,14 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { IListResponse } from 'src/shared/models/pagination.models';
-import { IUpdateUser, IUser } from './interfaces/user.models';
+import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import { IUpdateUser, IUser } from './interfaces/users.interface';
 import { UserRepository } from './users.repository';
-import { PageOptionsDto } from './dto/page-options.dto copy';
+import { UploadService } from 'modules/upload/upload.service';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly userRepository: UserRepository) {}
-
-  async create(dto: CreateUserDto): Promise<IUser> {
-    const userExist = await this.userRepository.findUserByEmail(dto.email);
-    if (userExist) {
-      throw new NotFoundException(`Указанная почта уже зарегистрирована`);
-    }
-
-    const user = await this.userRepository.create(dto);
-    return user;
-  }
-
-  async findAllCompanies(query: PageOptionsDto): Promise<IListResponse<IUser>> {
-    const result = await this.userRepository.findAllCompanies(query);
-    return result;
-  }
+  constructor(
+    private readonly userRepository: UserRepository,
+    private readonly uploadService: UploadService,
+  ) {}
 
   async findById(id: number): Promise<IUser> {
     const user = await this.userRepository.findUserById(id);
@@ -30,44 +16,51 @@ export class UsersService {
       throw new NotFoundException(`Пользователь ${id} не найден`);
     }
 
+    if (user && !user.isVerified) {
+      throw new NotFoundException(`Почта пользователя не была подтверждена при регистрации.`);
+    }
+
     return user;
   }
 
-  async update(dto: IUpdateUser): Promise<IUser> {
-    const user = await this.findById(dto.id);
+  async update(userId: number, dto: IUpdateUser): Promise<IUser> {
+    const user = await this.findById(userId);
+
+    if (user.id !== userId) {
+      throw new ForbiddenException('Вы не можете редактировать чужой профиль');
+    }
+
     const updatedUser = {
       ...user,
       ...dto,
       id: user.id,
       updatedAt: new Date(),
-    }
+    };
     await this.userRepository.update(updatedUser);
     return updatedUser;
   }
 
-  public async remove(id: number): Promise<void> {
+  public async remove(userId: number, id: number): Promise<void> {
     const user = await this.findById(id);
+    if (user.id !== userId) {
+      throw new ForbiddenException('Вы не можете редактировать чужой профиль');
+    }
     const deletedUser = {
       ...user,
-      id: user.id,
+      id: userId,
       isDeleted: true,
       updatedAt: new Date(),
     };
     await this.userRepository.update(deletedUser);
   }
 
-  async reset(email: string): Promise<void> {
-    const user = await this.userRepository.findDeletedUserByEmail(email);
-    if (!user) {
-      throw new NotFoundException('Пользователь не найден в архиве');
-    }
+  async updateAvatar(userId: number, file: Express.Multer.File) {
+    const user = await this.findById(userId);
+    const image = await this.uploadService.uploadSingleImage(file);
 
-    const resetUser = {
-      ...user,
-      id: user.id,
-      isDeleted: false,
-      updatedAt: new Date(),
-    };
-    await this.userRepository.update(resetUser);
+    user.avatarUrl = image.secure_url;
+    await this.userRepository.update(user);
+
+    return { avatarUrl: user.avatarUrl };
   }
 }

@@ -1,4 +1,4 @@
-export interface IDefaultDocument extends Document {
+export interface IDefaultDocument {
   id: number;
   isDeleted?: boolean;
   createdAt?: Date;

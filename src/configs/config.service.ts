@@ -56,9 +56,7 @@ export class ConfigService implements IConfigService {
   private getValue(name: string): string {
     const value = this.configService.get<string>(name);
     if (!value) {
-      throw new InternalServerErrorException(
-        `${name} parameter does not specified correct format`,
-      );
+      throw new InternalServerErrorException(`${name} parameter does not specified correct format`);
     }
     return value;
   }

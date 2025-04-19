@@ -8,22 +8,10 @@ import { DbConfig } from './db.config';
 @Module({
   imports: [
     NestModule.forRoot({
-      envFilePath: [
-        '.env.local',
-        '.env',
-      ],
+      envFilePath: ['.env.local', '.env'],
     }),
   ],
-  providers: [
-    ConfigService,
-    AppConfig,
-    DbConfig,
-  ],
-  exports: [
-    ConfigService,
-    AppConfig,
-    DbConfig,
-  ],
+  providers: [ConfigService, AppConfig, DbConfig],
+  exports: [ConfigService, AppConfig, DbConfig],
 })
-export class ConfigModule {
-}
+export class ConfigModule {}

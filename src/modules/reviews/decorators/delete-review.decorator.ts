@@ -1,14 +1,14 @@
-import { applyDecorators, HttpCode, HttpStatus, Version } from '@nestjs/common';
+import { applyDecorators, HttpCode, HttpStatus } from '@nestjs/common';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 
-export const ApiResetUser = (): ReturnType<typeof applyDecorators> =>
+export const ApiDeleteReview = (): ReturnType<typeof applyDecorators> =>
   applyDecorators(
     ApiOperation({
-      summary: 'Восстановление профиля',
+      summary: 'Удаление отзыва',
     }),
     ApiResponse({
       status: HttpStatus.OK,
-      description: 'Успешное восстановление',
+      description: 'Успешное удаление',
     }),
     ApiResponse({
       status: HttpStatus.BAD_REQUEST,
@@ -16,8 +16,7 @@ export const ApiResetUser = (): ReturnType<typeof applyDecorators> =>
     }),
     ApiResponse({
       status: HttpStatus.NOT_FOUND,
-      description: 'Пользователь не найден',
+      description: 'Отзыв не найден',
     }),
     HttpCode(HttpStatus.OK),
-    Version('1'),
   );

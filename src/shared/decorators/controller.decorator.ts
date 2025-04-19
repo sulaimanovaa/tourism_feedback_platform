@@ -1,13 +1,6 @@
-import {
-  applyDecorators,
-  Controller,
-  UsePipes,
-  ValidationPipe,
-} from '@nestjs/common';
+import { applyDecorators, Controller, UsePipes, ValidationPipe } from '@nestjs/common';
 
-export const ControllerDecorator = (
-  name: string,
-): ReturnType<typeof applyDecorators> =>
+export const ControllerDecorator = (name: string): ReturnType<typeof applyDecorators> =>
   applyDecorators(
     UsePipes(
       new ValidationPipe({

@@ -1,10 +1,10 @@
-import { applyDecorators, HttpCode, HttpStatus, Version } from '@nestjs/common';
+import { applyDecorators, HttpCode, HttpStatus } from '@nestjs/common';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 
-export const ApiCreateUser = (): ReturnType<typeof applyDecorators> =>
+export const ApiCreateReview = (): ReturnType<typeof applyDecorators> =>
   applyDecorators(
     ApiOperation({
-      summary: 'Регистрация пользователя',
+      summary: 'Отправка отзыва',
     }),
     ApiResponse({
       status: HttpStatus.CREATED,
@@ -15,5 +15,4 @@ export const ApiCreateUser = (): ReturnType<typeof applyDecorators> =>
       description: 'Ошибочные параметры запроса',
     }),
     HttpCode(HttpStatus.CREATED),
-    Version('1'),
   );

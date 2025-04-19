@@ -19,20 +19,22 @@ async function bootstrap() {
 
   const appConfig = app.get(AppConfig);
   const logger = new Logger('Bootstrap');
-  const PORT = appConfig.port;;
+  const PORT = appConfig.port;
 
   if (!appConfig.isProduction) {
     const config = new DocumentBuilder()
-      .setTitle('Travel - Builder Service')
-      .setDescription('Сервис Builder')
+      .setTitle('Travel Review Platform - Builder Service')
+      .setDescription('Разработка веб-системы отзывов и рекомендаций для туристических услуг')
       .setVersion('1.0')
       .addTag('doc.json')
-      .addApiKey(
+      .addBearerAuth(
         {
-          type: 'apiKey',
-          name: 'authorization',
+          type: 'http',
+          in: 'header',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
         },
-        'oneid',
+        'auth',
       )
       .build();
     const document = SwaggerModule.createDocument(app, config, {

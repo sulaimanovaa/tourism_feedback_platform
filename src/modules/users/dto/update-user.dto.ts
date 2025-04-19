@@ -1,61 +1,35 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsNumber, IsOptional, IsString } from 'class-validator';
-import { IUpdateUser } from '../interfaces/user.models';
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import { IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
+import { IUpdateUser } from '../interfaces/users.interface';
+import { DtoMessages } from 'shared/messages/dto.messages';
 
 export class UpdateUserDto implements IUpdateUser {
-  @ApiProperty({
-    description: 'id задачи в бд',
-    example: 1,
-    required: true,
-  })
-  @IsNumber()
-  id: number;
-
   @ApiPropertyOptional({
-    description: 'nickname',
+    description: 'Описание профиля',
     required: false,
   })
   @IsOptional()
   @IsString()
+  @MaxLength(200, { message: DtoMessages.maxLength })
   bio?: string;
 
   @ApiPropertyOptional({
-    description: 'nickname',
+    description: 'Имя',
     required: false,
   })
   @IsOptional()
   @IsString()
-  avatarUrl?: string;
-
-  @ApiPropertyOptional({
-    description: 'nickname',
-    required: false,
-  })
-  @IsOptional()
-  @IsString()
-  address?: string;
-
-  @ApiPropertyOptional({
-    description: 'nickname',
-    required: false,
-  })
-  @IsOptional()
-  @IsString()
-  contact?: string;
-
-  @ApiPropertyOptional({
-    description: 'nickname',
-    required: false,
-  })
-  @IsOptional()
-  @IsString()
+  @MinLength(1, { message: DtoMessages.minLength })
+  @MaxLength(30, { message: DtoMessages.maxLength })
   name?: string;
 
   @ApiPropertyOptional({
-    description: 'nickname',
+    description: 'Никнейм',
     required: false,
   })
   @IsOptional()
   @IsString()
-  nickname?: string;
+  @MinLength(1, { message: DtoMessages.minLength })
+  @MaxLength(30, { message: DtoMessages.maxLength })
+  username?: string;
 }

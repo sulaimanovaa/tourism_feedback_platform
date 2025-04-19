@@ -1,4 +1,4 @@
-import { applyDecorators, HttpCode, HttpStatus, Version } from '@nestjs/common';
+import { applyDecorators, HttpCode, HttpStatus } from '@nestjs/common';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 
 export const ApiDeleteUser = (): ReturnType<typeof applyDecorators> =>
@@ -19,5 +19,4 @@ export const ApiDeleteUser = (): ReturnType<typeof applyDecorators> =>
       description: 'Пользователь не найден',
     }),
     HttpCode(HttpStatus.OK),
-    Version('1'),
   );

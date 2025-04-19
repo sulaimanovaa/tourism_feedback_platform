@@ -1,6 +1,6 @@
-import { Injectable } from "@nestjs/common";
-import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from "@nestjs/typeorm";
-import { ConfigService } from "./config.service";
+import { Injectable } from '@nestjs/common';
+import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
+import { ConfigService } from './config.service';
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 
 @Injectable()
@@ -19,9 +19,7 @@ export class DbConfig implements TypeOrmOptionsFactory {
     this.dbUsername = configService.getString('DB_USERNAME');
     this.dbPassword = configService.getString('DB_PASSWORD');
     this.dbDatabase = configService.getString('DB_DATABASE');
-    this.dbMigrationsRun = configService.getBoolean(
-      'DB_MIGRATIONS_RUN',
-    );
+    this.dbMigrationsRun = configService.getBoolean('DB_MIGRATIONS_RUN');
   }
 
   createTypeOrmOptions(): TypeOrmModuleOptions | Promise<TypeOrmModuleOptions> {
