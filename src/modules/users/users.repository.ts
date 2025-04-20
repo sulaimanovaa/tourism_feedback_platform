@@ -16,7 +16,7 @@ export class UserRepository {
     this.logger = new Logger(UserRepository.name);
   }
 
-  async findUserById(id: number): Promise<IUser | undefined> {
+  async findUserById(id: string): Promise<IUser | undefined> {
     try {
       const user = await this.userRepository.findOne({
         where: {
@@ -34,7 +34,7 @@ export class UserRepository {
     }
   }
 
-  async findDeletedUserById(id: number): Promise<IUser | undefined> {
+  async findDeletedUserById(id: string): Promise<IUser | undefined> {
     try {
       const user = await this.userRepository.findOne({
         where: {

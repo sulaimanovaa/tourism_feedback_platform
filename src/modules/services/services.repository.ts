@@ -22,7 +22,7 @@ export class ServiceRepository {
     this.logger = new Logger(ServiceEntity.name);
   }
 
-  async findById(id: number): Promise<IService | undefined> {
+  async findById(id: string): Promise<IService | undefined> {
     try {
       const service = await this.serviceRepository.findOne({
         where: {
@@ -59,7 +59,7 @@ export class ServiceRepository {
     }
   }
 
-  async findDeletedById(id: number): Promise<IService | undefined> {
+  async findDeletedById(id: string): Promise<IService | undefined> {
     try {
       const service = await this.serviceRepository.findOne({
         where: {

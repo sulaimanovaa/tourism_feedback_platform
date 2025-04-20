@@ -22,7 +22,7 @@ export class ReviewsService {
     private readonly uploadService: UploadService,
   ) {}
 
-  async create(userId: number, dto: CreateReviewDto): Promise<IReview> {
+  async create(userId: string, dto: CreateReviewDto): Promise<IReview> {
     const [user, service] = await Promise.all([
       this.userService.findById(userId),
       this.serviceService.findById(dto.serviceId),
@@ -46,14 +46,14 @@ export class ReviewsService {
   }
 
   async getFilteredReviews(
-    serviceId: number,
+    serviceId: string,
     query: PageOptionsReviewDto,
   ): Promise<IListResponseReviews> {
     const result = await this.reviewRepository.getReviews(serviceId, query);
     return result;
   }
 
-  async findById(id: number): Promise<IReview> {
+  async findById(id: string): Promise<IReview> {
     const review = await this.reviewRepository.findById(id);
     if (!review) {
       throw new NotFoundException(`Отзыв ${id} не найден`);
@@ -62,7 +62,7 @@ export class ReviewsService {
     return review;
   }
 
-  async update(userId: number, dto: IUpdateReview): Promise<IReview> {
+  async update(userId: string, dto: IUpdateReview): Promise<IReview> {
     const review = await this.findById(dto.id);
 
     if (review.user.id !== userId) {
@@ -83,7 +83,7 @@ export class ReviewsService {
     return updatedReview;
   }
 
-  public async remove(userId: number, id: number): Promise<void> {
+  public async remove(userId: string, id: string): Promise<void> {
     const review = await this.findById(id);
 
     if (review.user.id !== userId) {
@@ -107,8 +107,8 @@ export class ReviewsService {
   }
 
   async uploadImages(
-    userId: number,
-    reviewId: number,
+    userId: string,
+    reviewId: string,
     files?: Express.Multer.File[],
   ): Promise<IReview> {
     const review = await this.findById(reviewId);

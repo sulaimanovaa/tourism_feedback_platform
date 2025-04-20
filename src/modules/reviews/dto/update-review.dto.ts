@@ -24,8 +24,8 @@ export class UpdateReviewDto implements IUpdateReview {
   @ApiProperty({
     description: 'ID услуги',
   })
-  @IsInt()
-  id: number;
+  @IsString()
+  id: string;
 
   @ApiPropertyOptional({
     description: 'Отзыв',

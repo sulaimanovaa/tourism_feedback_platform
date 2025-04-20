@@ -27,7 +27,7 @@ export class ReviewLikeService {
     return { liked: true, message: 'Отзыв лайкнут' };
   }
 
-  async getLikesCount(reviewId: number): Promise<IReviewLikesCount> {
+  async getLikesCount(reviewId: string): Promise<IReviewLikesCount> {
     const count = await this.likeRepository.getLikesCount(reviewId);
     return count;
   }

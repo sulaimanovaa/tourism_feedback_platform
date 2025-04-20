@@ -14,8 +14,8 @@ import { LikedAspectEnum, UsageType } from 'modules/reviews/interfaces/reviews.e
 
 @Entity('reviews')
 export class ReviewEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   rating: number;

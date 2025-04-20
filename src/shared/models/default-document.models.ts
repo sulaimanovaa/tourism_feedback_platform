@@ -1,5 +1,5 @@
 export interface IDefaultDocument {
-  id: number;
+  id: string;
   isDeleted?: boolean;
   createdAt?: Date;
   updatedAt: Date;

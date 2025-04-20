@@ -8,7 +8,7 @@ import {
   Query,
   UseGuards,
   UploadedFiles,
-  ParseIntPipe,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { ServicesService } from './services.service';
 import { CreateServiceDto } from './dto/create-service.dto';
@@ -51,7 +51,7 @@ export class ServicesController {
   @ApiGetServiceById()
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<IService> {
-    const service = await this.servicesService.findById(+id);
+    const service = await this.servicesService.findById(id);
     return service;
   }
 
@@ -67,8 +67,11 @@ export class ServicesController {
   @ApiDeleteService()
   @Delete(':id')
   @UseGuards(AuthGuard)
-  async remove(@CurrentUserId() user, @Param('id') id: string): Promise<void> {
-    const service = await this.servicesService.remove(user, +id);
+  async remove(
+    @CurrentUserId() user,
+    @Param('userId', new ParseUUIDPipe()) userId: string,
+  ): Promise<void> {
+    const service = await this.servicesService.remove(user, userId);
     return service;
   }
 
@@ -79,7 +82,7 @@ export class ServicesController {
   async updateAvatar(
     @UploadedFiles() files: Express.Multer.File[],
     @CurrentUserId() userId,
-    @Param('serviceId', ParseIntPipe) serviceId: number,
+    @Param('serviceId', new ParseUUIDPipe()) serviceId: string,
   ) {
     const result = await this.servicesService.uploadImages(userId, serviceId, files);
     return result;

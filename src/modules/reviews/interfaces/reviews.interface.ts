@@ -30,7 +30,7 @@ export interface ICreateReview
     | 'customLikedAspect'
     | 'usageType'
   > {
-  serviceId: number;
+  serviceId: string;
 }
 
 export interface IUpdateReview
@@ -45,8 +45,8 @@ export interface IUpdateReview
 }
 
 export interface IFindReviewByIds {
-  userId: number;
-  serviceId: number;
+  userId: string;
+  serviceId: string;
 }
 
 export interface IReviewStats {

@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsUUID } from 'class-validator';
 import { IFollowDto } from '../interfaces/follows.interface';
 import { ApiProperty } from '@nestjs/swagger';
 
@@ -6,7 +6,7 @@ export class FollowDto implements IFollowDto {
   @ApiProperty({
     description: 'Подписаться на',
   })
-  @IsNumber()
+  @IsUUID()
   @IsNotEmpty()
-  followingId: number;
+  followingId: string;
 }

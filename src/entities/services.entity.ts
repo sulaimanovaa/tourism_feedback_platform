@@ -13,8 +13,8 @@ import { LocationEnum, ServiceCategoryEnum } from 'modules/services/interfaces/s
 
 @Entity('services')
 export class ServiceEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   title: string;

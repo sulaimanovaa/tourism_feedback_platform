@@ -4,8 +4,8 @@ import { ServiceEntity } from './services.entity';
 
 @Entity('saved_services')
 export class SavedServiceEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @ManyToOne(() => UserEntity, { onDelete: 'CASCADE' })
   user: UserEntity;

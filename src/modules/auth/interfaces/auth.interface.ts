@@ -10,7 +10,7 @@ export interface IVerifyEmail {
 }
 
 export interface IPasswordTokenReset {
-  id: number;
+  id: string;
   token: string;
   user: IUser;
   expirationDate: Date;

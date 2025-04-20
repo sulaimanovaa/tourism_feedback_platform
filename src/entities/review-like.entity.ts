@@ -4,8 +4,8 @@ import { UserEntity } from './users.entity';
 
 @Entity('review_likes')
 export class ReviewLikeEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @ManyToOne(() => UserEntity, (user) => user.reviewLikes, { onDelete: 'CASCADE' })
   user: UserEntity;

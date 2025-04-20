@@ -14,7 +14,7 @@ export interface ICreateUser extends Pick<IUser, 'name'> {}
 
 export interface IUpdateUser extends Pick<IUser, 'bio' | 'username'> {
   name?: string;
-  id?: number;
+  id?: string;
 }
 
 export enum UserSortFields {

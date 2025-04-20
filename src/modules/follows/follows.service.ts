@@ -16,7 +16,7 @@ export class FollowsService {
     private readonly userService: UsersService,
   ) {}
 
-  async followUser(followerId: number, dto: FollowDto): Promise<IFollows> {
+  async followUser(followerId: string, dto: FollowDto): Promise<IFollows> {
     const followIds = {
       followerId,
       followingId: dto.followingId,
@@ -37,7 +37,7 @@ export class FollowsService {
     return follow;
   }
 
-  async unfollowUser(followerId: number, dto: FollowDto): Promise<void> {
+  async unfollowUser(followerId: string, dto: FollowDto): Promise<void> {
     const followIds = {
       followerId,
       followingId: dto.followingId,
@@ -51,17 +51,17 @@ export class FollowsService {
     await this.followRepository.deleteFollow(follow);
   }
 
-  async getFollowers(userId: number): Promise<IFollows[]> {
+  async getFollowers(userId: string): Promise<IFollows[]> {
     const follows = await this.followRepository.findAllFollowers(userId);
     return follows;
   }
 
-  async getFollowing(userId: number): Promise<IFollows[]> {
+  async getFollowing(userId: string): Promise<IFollows[]> {
     const follows = await this.followRepository.findAllFollowing(userId);
     return follows;
   }
 
-  async getFollowCounts(userId: number): Promise<IFollowsCount> {
+  async getFollowCounts(userId: string): Promise<IFollowsCount> {
     const follows = await this.followRepository.getFollowCounts(userId);
     return follows;
   }

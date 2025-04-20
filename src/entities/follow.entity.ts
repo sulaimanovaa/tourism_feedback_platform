@@ -3,8 +3,8 @@ import { UserEntity } from './users.entity';
 
 @Entity('follows')
 export class FollowEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @ManyToOne(() => UserEntity, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'follower_id' })

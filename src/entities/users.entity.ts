@@ -14,8 +14,8 @@ import { PasswordResetTokenEntity } from './token.entity';
 
 @Entity('users')
 export class UserEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column({ type: 'varchar', unique: true })
   email: string;

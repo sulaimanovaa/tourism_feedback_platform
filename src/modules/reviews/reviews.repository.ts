@@ -23,7 +23,7 @@ export class ReviewRepository {
     this.logger = new Logger(ReviewEntity.name);
   }
 
-  async findById(id: number): Promise<IReview | undefined> {
+  async findById(id: string): Promise<IReview | undefined> {
     try {
       const user = await this.reviewRepository.findOne({
         where: {
@@ -58,7 +58,7 @@ export class ReviewRepository {
     }
   }
 
-  async findDeletedById(id: number): Promise<IReview | undefined> {
+  async findDeletedById(id: string): Promise<IReview | undefined> {
     try {
       const user = await this.reviewRepository.findOne({
         where: {
@@ -99,7 +99,7 @@ export class ReviewRepository {
     }
   }
 
-  async getReviews(serviceId: number, query: PageOptionsReviewDto): Promise<IListResponseReviews> {
+  async getReviews(serviceId: string, query: PageOptionsReviewDto): Promise<IListResponseReviews> {
     const queryBuilder = this.reviewRepository
       .createQueryBuilder('review')
       .where('review.service = :serviceId', { serviceId })
@@ -135,7 +135,7 @@ export class ReviewRepository {
     };
   }
 
-  async getReviewStats(serviceId: number): Promise<IReviewStats> {
+  async getReviewStats(serviceId: string): Promise<IReviewStats> {
     const qb = this.reviewRepository
       .createQueryBuilder('review')
       .where('review.service = :serviceId', { serviceId })

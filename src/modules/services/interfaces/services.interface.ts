@@ -33,7 +33,7 @@ export interface ICreateService
 }
 
 export interface IUpdateService {
-  id: number;
+  id: string;
   title?: string;
   description?: string;
   photos?: string[];

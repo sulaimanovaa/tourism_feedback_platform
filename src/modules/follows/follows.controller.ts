@@ -1,4 +1,4 @@
-import { Get, Post, Body, Param, Delete, UseGuards, ParseIntPipe } from '@nestjs/common';
+import { Get, Post, Body, Param, Delete, UseGuards, ParseUUIDPipe } from '@nestjs/common';
 import { FollowsService } from './follows.service';
 import { AuthGuard } from 'shared/guards/jwt.guards';
 import { ControllerDecorator } from 'shared/decorators/controller.decorator';
@@ -35,22 +35,22 @@ export class FollowsController {
 
   @ApiGetFollowersById()
   @Get('followers/:id')
-  async getFollowers(@Param('id', ParseIntPipe) userId: number): Promise<IFollows[]> {
-    const result = await this.followService.getFollowers(userId);
+  async getFollowers(@Param('id', new ParseUUIDPipe()) id: string): Promise<IFollows[]> {
+    const result = await this.followService.getFollowers(id);
     return result;
   }
 
   @ApiGetFollowingById()
   @Get('following/:id')
-  async getFollowing(@Param('id', ParseIntPipe) userId: number): Promise<IFollows[]> {
-    const result = await this.followService.getFollowing(userId);
+  async getFollowing(@Param('id', new ParseUUIDPipe()) id: string): Promise<IFollows[]> {
+    const result = await this.followService.getFollowing(id);
     return result;
   }
 
   @ApiGetFollowCounts()
   @Get('count/:id')
-  async getFollowCounts(@Param('id', ParseIntPipe) userId: number): Promise<IFollowsCount> {
-    const result = await this.followService.getFollowCounts(userId);
+  async getFollowCounts(@Param('id', new ParseUUIDPipe()) id: string): Promise<IFollowsCount> {
+    const result = await this.followService.getFollowCounts(id);
     return result;
   }
 }

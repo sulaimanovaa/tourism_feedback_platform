@@ -5,10 +5,10 @@ import {
   Patch,
   Param,
   Delete,
-  ParseIntPipe,
   Query,
   UseGuards,
   UploadedFiles,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { ReviewsService } from './reviews.service';
 import { CreateReviewDto } from './dto/create-review.dto';
@@ -43,7 +43,7 @@ export class ReviewsController {
   @ApiGetListReviews()
   @Get('get-all/:serviceId')
   async findAll(
-    @Param('serviceId', ParseIntPipe) serviceId: number,
+    @Param('serviceId', new ParseUUIDPipe()) serviceId: string,
     @Query() query: PageOptionsReviewDto,
   ): Promise<IListResponseReviews> {
     const result = await this.reviewsService.getFilteredReviews(serviceId, query);
@@ -52,8 +52,8 @@ export class ReviewsController {
 
   @ApiGetReviewById()
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<IReview> {
-    const result = await this.reviewsService.findById(+id);
+  async findOne(@Param('id', new ParseUUIDPipe()) id: string): Promise<IReview> {
+    const result = await this.reviewsService.findById(id);
     return result;
   }
 
@@ -68,8 +68,8 @@ export class ReviewsController {
   @ApiDeleteReview()
   @Delete(':id')
   @UseGuards(AuthGuard)
-  async remove(@CurrentUserId() user, @Param('id') id: string): Promise<void> {
-    await this.reviewsService.remove(user, +id);
+  async remove(@CurrentUserId() user, @Param('id', new ParseUUIDPipe()) id: string): Promise<void> {
+    await this.reviewsService.remove(user, id);
   }
 
   @ApiUploadImage()
@@ -79,7 +79,7 @@ export class ReviewsController {
   async updateAvatar(
     @UploadedFiles() files: Express.Multer.File[],
     @CurrentUserId() userId,
-    @Param('reviewId', ParseIntPipe) reviewId: number,
+    @Param('reviewId', new ParseUUIDPipe()) reviewId: string,
   ) {
     const result = await this.reviewsService.uploadImages(userId, reviewId, files);
     return result;

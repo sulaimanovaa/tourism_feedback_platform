@@ -58,7 +58,7 @@ export class ReviewLikeRepository {
     }
   }
 
-  async getLikesCount(reviewId: number): Promise<IReviewLikesCount> {
+  async getLikesCount(reviewId: string): Promise<IReviewLikesCount> {
     try {
       const count = await this.likesRepository.count({
         where: { review: { id: reviewId } },

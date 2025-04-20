@@ -103,7 +103,7 @@ export class AuthService {
     });
   }
 
-  async resetPassword(token: string, id: number, dto: ResetPasswordDto) {
+  async resetPassword(token: string, id: string, dto: ResetPasswordDto) {
     if (dto.newPassword !== dto.confirmPassword) {
       throw new BadRequestException('Пароли не совпадают');
     }
