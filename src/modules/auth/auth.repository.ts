@@ -62,7 +62,7 @@ export class AuthRepository {
     }
   }
 
-  async findToken(id: number): Promise<IPasswordTokenReset | undefined> {
+  async findToken(id: string): Promise<IPasswordTokenReset | undefined> {
     try {
       const result = await this.tokenRepository.findOne({
         where: { id },
@@ -102,7 +102,7 @@ export class AuthRepository {
     }
   }
 
-  async removePreviousTokens(userId: number): Promise<void> {
+  async removePreviousTokens(userId: string): Promise<void> {
     try {
       await this.tokenRepository.delete({ user: { id: userId } });
     } catch (error) {
@@ -113,7 +113,7 @@ export class AuthRepository {
     }
   }
 
-  async findLastPassword(userId: number): Promise<IPasswordTokenReset | undefined> {
+  async findLastPassword(userId: string): Promise<IPasswordTokenReset | undefined> {
     try {
       const result = await this.tokenRepository.findOne({
         where: { user: { id: userId } },
@@ -128,7 +128,7 @@ export class AuthRepository {
     }
   }
 
-  public async activateUser(userId: number): Promise<void> {
+  public async activateUser(userId: string): Promise<void> {
     try {
       await this.userRepository.update(userId, {
         isDeleted: false,

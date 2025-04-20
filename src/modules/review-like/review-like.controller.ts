@@ -1,4 +1,4 @@
-import { Get, Post, Param, ParseIntPipe, UseGuards } from '@nestjs/common';
+import { Get, Post, Param, UseGuards, ParseUUIDPipe } from '@nestjs/common';
 import { ReviewLikeService } from './review-like.service';
 import { IReviewLikesCount, IReviewLikeStatus } from './interfaces/review-like.interface';
 import { ControllerDecorator } from 'shared/decorators/controller.decorator';
@@ -18,7 +18,7 @@ export class ReviewLikeController {
   @UseGuards(AuthGuard)
   async toggleLike(
     @CurrentUserId() userId,
-    @Param('reviewId', ParseIntPipe) reviewId: number,
+    @Param('reviewId', new ParseUUIDPipe()) reviewId: string,
   ): Promise<IReviewLikeStatus> {
     const like = await this.reviewLikeService.toggleLike({ userId, reviewId });
     return like;
@@ -27,7 +27,7 @@ export class ReviewLikeController {
   @ApiGetReviewLikeCount()
   @Get('count/:reviewId')
   async getLikesCount(
-    @Param('reviewId', ParseIntPipe) reviewId: number,
+    @Param('reviewId', new ParseUUIDPipe()) reviewId: string,
   ): Promise<IReviewLikesCount> {
     const count = await this.reviewLikeService.getLikesCount(reviewId);
     return count;

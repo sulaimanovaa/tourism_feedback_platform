@@ -10,7 +10,7 @@ export class UsersService {
     private readonly uploadService: UploadService,
   ) {}
 
-  async findById(id: number): Promise<IUser> {
+  async findById(id: string): Promise<IUser> {
     const user = await this.userRepository.findUserById(id);
     if (!user) {
       throw new NotFoundException(`Пользователь ${id} не найден`);
@@ -23,7 +23,7 @@ export class UsersService {
     return user;
   }
 
-  async update(userId: number, dto: IUpdateUser): Promise<IUser> {
+  async update(userId: string, dto: IUpdateUser): Promise<IUser> {
     const user = await this.findById(userId);
 
     if (user.id !== userId) {
@@ -40,7 +40,7 @@ export class UsersService {
     return updatedUser;
   }
 
-  public async remove(userId: number, id: number): Promise<void> {
+  public async remove(userId: string, id: string): Promise<void> {
     const user = await this.findById(id);
     if (user.id !== userId) {
       throw new ForbiddenException('Вы не можете редактировать чужой профиль');
@@ -54,7 +54,7 @@ export class UsersService {
     await this.userRepository.update(deletedUser);
   }
 
-  async updateAvatar(userId: number, file: Express.Multer.File) {
+  async updateAvatar(userId: string, file: Express.Multer.File) {
     const user = await this.findById(userId);
     const image = await this.uploadService.uploadSingleImage(file);
 

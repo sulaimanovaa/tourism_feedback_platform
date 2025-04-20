@@ -9,6 +9,7 @@ import {
   IsOptional,
   IsPositive,
   IsString,
+  IsUUID,
   Max,
   MaxLength,
   Min,
@@ -24,8 +25,8 @@ export class CreateReviewDto implements ICreateReview {
   @ApiProperty({
     description: 'ID услуги',
   })
-  @IsInt()
-  serviceId: number;
+  @IsUUID()
+  serviceId: string;
 
   @ApiProperty({
     description: 'Оценка услуги',

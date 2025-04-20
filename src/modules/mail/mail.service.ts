@@ -32,7 +32,7 @@ export class MailService {
   async sendPasswordResetEmail(props: IMailParams) {
     const resetUrl = this.configService.getString('AUTH_RESET_URL');
     const resetLink = this.buildLink(resetUrl, {
-      id: props.id.toString(),
+      id: props.id,
       token: props.token,
     });
 

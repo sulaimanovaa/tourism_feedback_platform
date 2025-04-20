@@ -2,15 +2,15 @@ import { IReview } from 'modules/reviews/interfaces/reviews.interface';
 import { IUser } from 'modules/users/interfaces/users.interface';
 
 export interface IReviewLike {
-  id: number;
+  id: string;
   user: IUser;
   review: IReview;
   createdAt: Date;
 }
 
 export interface IReviewLikeIds {
-  userId: number;
-  reviewId: number;
+  userId: string;
+  reviewId: string;
 }
 
 export interface IDeleteReviewLike extends Pick<IReviewLike, 'id'> {}

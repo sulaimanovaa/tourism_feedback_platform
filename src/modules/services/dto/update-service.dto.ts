@@ -7,6 +7,7 @@ import {
   IsNumber,
   IsOptional,
   IsString,
+  IsUUID,
   MaxLength,
   MinLength,
 } from 'class-validator';
@@ -17,8 +18,8 @@ export class UpdateServiceDto implements IUpdateService {
   @ApiProperty({
     description: 'ID услуги',
   })
-  @IsNumber()
-  id: number;
+  @IsUUID()
+  id: string;
 
   @ApiPropertyOptional({
     description: 'Название услуги',

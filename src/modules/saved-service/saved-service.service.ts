@@ -3,7 +3,7 @@ import { SavedServiceRepository } from './saved-service.repository';
 import {
   ISavedService,
   ISavedServiceStatus,
-  ISaveServiceIds,
+  ISaveserviceIds,
 } from './interfaces/saved-service.interface';
 import { ServicesService } from '../services/services.service';
 
@@ -14,7 +14,7 @@ export class SavedServiceService {
     private readonly serviceService: ServicesService,
   ) {}
 
-  async toggleSave(dto: ISaveServiceIds): Promise<ISavedServiceStatus> {
+  async toggleSave(dto: ISaveserviceIds): Promise<ISavedServiceStatus> {
     await this.serviceService.findById(dto.serviceId);
 
     const existing = await this.savedRepo.findOneByIds(dto);
@@ -27,7 +27,7 @@ export class SavedServiceService {
     return { saved: true, message: 'Услуга сохранена' };
   }
 
-  async getSavedServices(userId: number): Promise<ISavedService[]> {
+  async getSavedServices(userId: string): Promise<ISavedService[]> {
     const saved = await this.savedRepo.findByUserId(userId);
     return saved;
   }

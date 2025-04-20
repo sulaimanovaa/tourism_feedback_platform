@@ -2,7 +2,7 @@ import { InternalServerErrorException, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { SavedServiceEntity } from 'entities/saved-service.entity';
 import { Repository } from 'typeorm';
-import { ISavedService, ISaveServiceIds } from './interfaces/saved-service.interface';
+import { ISavedService, ISaveserviceIds } from './interfaces/saved-service.interface';
 export class SavedServiceRepository {
   private readonly logger: Logger;
 
@@ -13,7 +13,7 @@ export class SavedServiceRepository {
     this.logger = new Logger(SavedServiceEntity.name);
   }
 
-  async findOneByIds(props: ISaveServiceIds): Promise<ISavedService | undefined> {
+  async findOneByIds(props: ISaveserviceIds): Promise<ISavedService | undefined> {
     try {
       const result = await this.savedRepository.findOne({
         where: {
@@ -30,7 +30,7 @@ export class SavedServiceRepository {
     }
   }
 
-  async save(props: ISaveServiceIds): Promise<ISavedService | undefined> {
+  async save(props: ISaveserviceIds): Promise<ISavedService | undefined> {
     try {
       const result = await this.savedRepository.create({
         user: { id: props.userId },
@@ -57,7 +57,7 @@ export class SavedServiceRepository {
     }
   }
 
-  async findByUserId(userId: number): Promise<ISavedService[]> {
+  async findByUserId(userId: string): Promise<ISavedService[]> {
     try {
       const result = await this.savedRepository.find({
         where: {

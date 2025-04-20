@@ -10,8 +10,8 @@ import { UserEntity } from './users.entity';
 
 @Entity('password_reset_tokens')
 export class PasswordResetTokenEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @ManyToOne(() => UserEntity, (user) => user.passwordResetTokens, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'user_id' })

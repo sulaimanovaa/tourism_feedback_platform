@@ -1,4 +1,4 @@
-import { Get, Post, Body, Param, ParseIntPipe, UseGuards } from '@nestjs/common';
+import { Get, Post, Param, UseGuards, ParseUUIDPipe } from '@nestjs/common';
 import { SavedServiceService } from './saved-service.service';
 import { ControllerDecorator } from 'shared/decorators/controller.decorator';
 import { ISavedService, ISavedServiceStatus } from './interfaces/saved-service.interface';
@@ -18,7 +18,7 @@ export class SavedServiceController {
   @UseGuards(AuthGuard)
   async toggle(
     @CurrentUserId() userId,
-    @Param('serviceId', ParseIntPipe) serviceId: number,
+    @Param('serviceId', new ParseUUIDPipe()) serviceId: string,
   ): Promise<ISavedServiceStatus> {
     const result = await this.savedServicesService.toggleSave({ userId, serviceId });
     return result;
@@ -26,7 +26,7 @@ export class SavedServiceController {
 
   @ApiGetListSavedServices()
   @Get(':userId')
-  async getAll(@Param('userId', ParseIntPipe) userId: number): Promise<ISavedService[]> {
+  async getAll(@Param('userId', new ParseUUIDPipe()) userId: string): Promise<ISavedService[]> {
     const result = await this.savedServicesService.getSavedServices(userId);
     return result;
   }

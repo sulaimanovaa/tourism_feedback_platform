@@ -1,4 +1,4 @@
-import { Get, Body, Patch, Param, ParseIntPipe, UseGuards, UploadedFile } from '@nestjs/common';
+import { Get, Body, Patch, Param, UseGuards, UploadedFile, ParseUUIDPipe } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { IUser } from './interfaces/users.interface';
@@ -19,7 +19,7 @@ export class UsersController {
 
   @ApiGetUserById()
   @Get(':id')
-  async findOne(@Param('id', ParseIntPipe) id: number): Promise<IUser> {
+  async findOne(@Param('id', new ParseUUIDPipe()) id: string): Promise<IUser> {
     const result = await this.usersService.findById(id);
     return result;
   }
@@ -35,7 +35,10 @@ export class UsersController {
   @ApiDeleteUser()
   @Patch('delete/:id')
   @UseGuards(AuthGuard)
-  async deleteUser(@CurrentUserId() userId, @Param('id', ParseIntPipe) id: number): Promise<void> {
+  async deleteUser(
+    @CurrentUserId() userId,
+    @Param('id', new ParseUUIDPipe()) id: string,
+  ): Promise<void> {
     await this.usersService.remove(userId, id);
   }
 

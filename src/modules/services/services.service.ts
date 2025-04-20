@@ -17,7 +17,7 @@ export class ServicesService {
     private readonly uploadService: UploadService,
   ) {}
 
-  async create(userId: number, dto: ICreateService): Promise<IService> {
+  async create(userId: string, dto: ICreateService): Promise<IService> {
     const existing = await this.serviceRepository.findByTitle(dto);
     if (existing) {
       throw new BadRequestException('Такая услуга уже добавлена');
@@ -38,7 +38,7 @@ export class ServicesService {
     return result;
   }
 
-  async findById(id: number): Promise<IService> {
+  async findById(id: string): Promise<IService> {
     const service = await this.serviceRepository.findById(id);
     if (!service) {
       throw new NotFoundException(`Туристическая услуга ${id} не найдена`);
@@ -47,7 +47,7 @@ export class ServicesService {
     return service;
   }
 
-  async update(userId: number, dto: IUpdateService): Promise<IService> {
+  async update(userId: string, dto: IUpdateService): Promise<IService> {
     const service = await this.findById(dto.id);
     if (service.user.id !== userId) {
       throw new ForbiddenException('Вы не можете редактировать чужую услугу');
@@ -72,7 +72,7 @@ export class ServicesService {
     return updated;
   }
 
-  public async remove(userId: number, id: number): Promise<void> {
+  public async remove(userId: string, id: string): Promise<void> {
     const service = await this.findById(id);
     if (service.user.id !== userId) {
       throw new ForbiddenException('Вы не можете редактировать чужую услугу');
@@ -88,8 +88,8 @@ export class ServicesService {
   }
 
   async uploadImages(
-    userId: number,
-    serviceId: number,
+    userId: string,
+    serviceId: string,
     files?: Express.Multer.File[],
   ): Promise<IService> {
     const service = await this.findById(serviceId);

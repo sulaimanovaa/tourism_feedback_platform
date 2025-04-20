@@ -47,7 +47,7 @@ export class FollowsRepository {
     }
   }
 
-  async findAllFollowers(userId: number): Promise<IFollows[] | undefined> {
+  async findAllFollowers(userId: string): Promise<IFollows[] | undefined> {
     try {
       const followers = await this.followRepository.find({
         where: { following: { id: userId } },
@@ -62,7 +62,7 @@ export class FollowsRepository {
     }
   }
 
-  async findAllFollowing(userId: number): Promise<IFollows[] | undefined> {
+  async findAllFollowing(userId: string): Promise<IFollows[] | undefined> {
     try {
       const followers = await this.followRepository.find({
         where: { follower: { id: userId } },
@@ -77,7 +77,7 @@ export class FollowsRepository {
     }
   }
 
-  async getFollowCounts(userId: number): Promise<IFollowsCount | undefined> {
+  async getFollowCounts(userId: string): Promise<IFollowsCount | undefined> {
     try {
       const [followersCount, followingCount] = await Promise.all([
         this.followRepository.count({
