@@ -23,7 +23,7 @@ async function bootstrap() {
 
   if (!appConfig.isProduction) {
     const config = new DocumentBuilder()
-      .setTitle('Travel Review Platform - Builder Service')
+      .setTitle('Tourism Feedback Platform - Builder Service')
       .setDescription('Разработка веб-системы отзывов и рекомендаций для туристических услуг')
       .setVersion('1.0')
       .addTag('doc.json')
