@@ -33,10 +33,10 @@ The system allows users to:
 ## Getting Started
 ```bash
 # Clone this repository
-$ git clone https://github.com/sulaimanovaa/travel_services_reviews.git
+$ git clone https://github.com/sulaimanovaa/tourism_feedback_platform.git
 
 # Go into the repository
-$ cd travel_services_reviews
+$ cd tourism_feedback_platform
 
 # Install dependencies
 $ npm install
