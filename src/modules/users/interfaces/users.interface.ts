@@ -1,4 +1,4 @@
-import { IDefaultDocument } from 'shared/models/default-document.models';
+import { IDefaultDocument } from 'shared/interfaces/default-document.interface';
 
 export interface IUser extends IDefaultDocument {
   email: string;

@@ -1,7 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IUpdateReview } from '../interfaces/reviews.interface';
 import {
-  ArrayMaxSize,
   IsArray,
   IsBoolean,
   IsEnum,
@@ -96,13 +95,4 @@ export class UpdateReviewDto implements IUpdateReview {
   @IsDateValid()
   @IsPastDate()
   experienceDate?: Date;
-
-  @ApiPropertyOptional({
-    description: 'Фотографии',
-    isArray: true,
-  })
-  @IsOptional()
-  @IsArray()
-  @ArrayMaxSize(3, { message: DtoMessages.maxLengthArray })
-  photos?: [];
 }

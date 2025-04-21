@@ -14,6 +14,7 @@ import { ApiForgotPassword } from './decorators/forgot-password.decorator';
 import { ApiChangePassword } from './decorators/change-password.decorator';
 import { ApiResetPassword } from './decorators/reset-password.decorator';
 import { ApiBearerAuth } from '@nestjs/swagger';
+import { IOutputMessage } from './interfaces/auth.interface';
 
 @ControllerDecorator('auth')
 @ApiBearerAuth('auth')
@@ -22,9 +23,9 @@ export class AuthController {
 
   @ApiRegisterUser()
   @Post('register')
-  async register(@Body() dto: RegisterDto) {
-    const result = await this.authService.register(dto);
-    return result;
+  async register(@Body() dto: RegisterDto): Promise<IOutputMessage> {
+    await this.authService.register(dto);
+    return { message: 'Ссылка для подтверждения отправлена на email' };
   }
 
   @ApiLogin()
@@ -35,15 +36,15 @@ export class AuthController {
   }
 
   @ApiVerifyEmail()
-  @Post('verify-email')
-  async verifyEmail(@Query('token') token: string) {
-    const result = this.authService.verifyEmail(token);
-    return result;
+  @Patch('verify-email')
+  async verifyEmail(@Query('token') token: string): Promise<IOutputMessage> {
+    await this.authService.verifyEmail(token);
+    return { message: 'Почта успешно подтверждена' };
   }
 
   @ApiForgotPassword()
   @Post('forgot-password')
-  async forgotPassword(@Body() dto: ForgotPasswordDto) {
+  async forgotPassword(@Body() dto: ForgotPasswordDto): Promise<IOutputMessage> {
     await this.authService.requestPasswordReset(dto);
     return { message: 'Инструкции по восстановлению пароля отправлены на email' };
   }
@@ -51,18 +52,18 @@ export class AuthController {
   @ApiChangePassword()
   @UseGuards(AuthGuard)
   @Patch('change-password')
-  async changePassword(@Body() dto: ChangePasswordDto, @Req() req) {
+  async changePassword(@Body() dto: ChangePasswordDto, @Req() req): Promise<IOutputMessage> {
     await this.authService.changePassword(req.user.email, dto);
     return { message: 'Пароль успешно изменен' };
   }
 
   @ApiResetPassword()
-  @Post('reset-password')
+  @Patch('reset-password')
   async resetPassword(
     @Query('token') token: string,
     @Query('id') id: string,
     @Body() dto: ResetPasswordDto,
-  ) {
+  ): Promise<IOutputMessage> {
     await this.authService.resetPassword(token, id, dto);
     return { message: 'Пароль успешно изменен' };
   }

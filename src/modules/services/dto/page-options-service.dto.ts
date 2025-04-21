@@ -1,6 +1,6 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
-import { SortOrderEnum } from '../../../shared/models/pagination.models';
+import { SortOrderEnum } from '../../../shared/interfaces/pagination.interface';
 import { PaginateRequest } from 'shared/dtos/paginate-request.dto';
 import { LocationEnum, ServiceCategoryEnum, ServiceSortByEnum } from '../interfaces/services.enums';
 

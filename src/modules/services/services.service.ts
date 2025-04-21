@@ -5,7 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { ICreateService, IService, IUpdateService } from './interfaces/services.interface';
-import { IListResponse } from 'shared/models/pagination.models';
+import { IListResponse } from 'shared/interfaces/pagination.interface';
 import { PageOptionsServiceDto } from './dto/page-options-service.dto';
 import { ServiceRepository } from './services.repository';
 import { UploadService } from 'modules/upload/upload.service';
@@ -100,7 +100,7 @@ export class ServicesService {
     if (files && Object.keys(files).length) {
       let uploadedImageUrls: string[] = [];
       uploadedImageUrls = (
-        await this.uploadService.uploadMultipleImages(files['reviewImages'])
+        await this.uploadService.uploadMultipleImages(files['images'])
       ).map((res) => res.secure_url);
 
       service.photos = uploadedImageUrls;

@@ -30,9 +30,9 @@ export class UserEntity {
   bio?: string;
 
   @Column({ nullable: true })
-  avatarUrl: string;
+  avatarUrl?: string;
 
-  @Column({ nullable: true })
+  @Column()
   username: string;
 
   @Column({ type: 'boolean', default: false })

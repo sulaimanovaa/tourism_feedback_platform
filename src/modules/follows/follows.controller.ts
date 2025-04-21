@@ -30,26 +30,26 @@ export class FollowsController {
   @Delete()
   async unfollow(@CurrentUserId() user, @Body() dto: FollowDto): Promise<{ message: string }> {
     await this.followService.unfollowUser(user, dto);
-    return { message: 'Успешно отписались' };
+    return { message: 'Подписка успешно удалена' };
   }
 
   @ApiGetFollowersById()
-  @Get('followers/:id')
-  async getFollowers(@Param('id', new ParseUUIDPipe()) id: string): Promise<IFollows[]> {
+  @Get('followers/:userId')
+  async getFollowers(@Param('userId', new ParseUUIDPipe()) id: string): Promise<IFollows[]> {
     const result = await this.followService.getFollowers(id);
     return result;
   }
 
   @ApiGetFollowingById()
-  @Get('following/:id')
-  async getFollowing(@Param('id', new ParseUUIDPipe()) id: string): Promise<IFollows[]> {
+  @Get('following/:userId')
+  async getFollowing(@Param('userId', new ParseUUIDPipe()) id: string): Promise<IFollows[]> {
     const result = await this.followService.getFollowing(id);
     return result;
   }
 
   @ApiGetFollowCounts()
-  @Get('count/:id')
-  async getFollowCounts(@Param('id', new ParseUUIDPipe()) id: string): Promise<IFollowsCount> {
+  @Get('count/:userId')
+  async getFollowCounts(@Param('userId', new ParseUUIDPipe()) id: string): Promise<IFollowsCount> {
     const result = await this.followService.getFollowCounts(id);
     return result;
   }

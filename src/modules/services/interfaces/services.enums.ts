@@ -21,5 +21,4 @@ export enum LocationEnum {
 
 export enum ServiceSortByEnum {
   RATING = 'rating',
-  POPULARITY = 'popularity',
 }

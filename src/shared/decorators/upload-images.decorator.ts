@@ -10,7 +10,7 @@ export function UploadImages(maxCount = 3) {
       schema: {
         type: 'object',
         properties: {
-          reviewImages: {
+          images: {
             type: 'array',
             items: { type: 'string', format: 'binary' },
           },

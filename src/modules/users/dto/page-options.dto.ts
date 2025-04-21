@@ -1,6 +1,6 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
-import { SortOrderEnum } from '../../../shared/models/pagination.models';
+import { SortOrderEnum } from '../../../shared/interfaces/pagination.interface';
 import { UserSortFields } from '../interfaces/users.interface';
 import { PaginateRequest } from 'shared/dtos/paginate-request.dto';
 

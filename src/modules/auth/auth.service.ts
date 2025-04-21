@@ -15,6 +15,7 @@ import { ResetPasswordDto } from './dto/reset-password.dto';
 import { IUser } from '../users/interfaces/users.interface';
 import { ChangePasswordDto } from './dto/change-password.dto';
 import { ForgotPasswordDto } from './dto/forgot-password.dto';
+import { generateRandomNickname } from './utils/nickname.utils';
 
 @Injectable()
 export class AuthService {
@@ -24,7 +25,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async register(dto: RegisterDto) {
+  async register(dto: RegisterDto): Promise<void> {
     const existingUser = await this.authRepository.findUserByEmail(dto.email);
 
     if (existingUser && !existingUser.isVerified) {
@@ -36,14 +37,11 @@ export class AuthService {
       throw new ConflictException('Пользователь с таким email уже существует.');
     }
 
-    const existingUsername = await this.authRepository.findUsername(dto.username);
-    if (existingUsername) {
-      throw new ConflictException('Пользователь с таким username уже существует.');
-    }
-
+    const username = generateRandomNickname(dto.email);
     const hashedPassword = await bcrypt.hash(dto.password, 10);
     const user = await this.authRepository.createUser({
       ...dto,
+      username,
       password: hashedPassword,
       isVerified: false,
     });
@@ -73,7 +71,7 @@ export class AuthService {
     }
   }
 
-  async requestPasswordReset(dto: ForgotPasswordDto) {
+  async requestPasswordReset(dto: ForgotPasswordDto): Promise<void> {
     const user = await this.authRepository.findUserByEmail(dto.email);
     if (!user) {
       throw new NotFoundException('Пользователь с таким email не найден');
@@ -103,7 +101,7 @@ export class AuthService {
     });
   }
 
-  async resetPassword(token: string, id: string, dto: ResetPasswordDto) {
+  async resetPassword(token: string, id: string, dto: ResetPasswordDto): Promise<void> {
     if (dto.newPassword !== dto.confirmPassword) {
       throw new BadRequestException('Пароли не совпадают');
     }

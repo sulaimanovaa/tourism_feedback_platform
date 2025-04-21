@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from '../../entities/users.entity';
 import { ICreateUser, IUpdateUser, IUser } from './interfaces/users.interface';
 import { Repository } from 'typeorm';
-import { IListResponse } from 'shared/models/pagination.models';
+import { IListResponse } from 'shared/interfaces/pagination.interface';
 import { PageOptionsDto } from './dto/page-options.dto';
 
 export class UserRepository {
@@ -100,4 +100,19 @@ export class UserRepository {
 
     return { totalCount, items };
   }
+
+  async findUsername(username: string): Promise<IUser | undefined> {
+    try {
+      const user = await this.userRepository.findOne({
+        where: { username },
+      });
+      return user;
+    } catch (error) {
+      if (error instanceof Error) {
+        this.logger.error(`${this.findUsername.name} - ${error.message}`);
+      }
+      throw new InternalServerErrorException();
+    }
+  }
+
 }

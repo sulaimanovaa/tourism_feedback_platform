@@ -21,11 +21,11 @@ export class RegisterDto implements IRegistUser {
   password: string;
 
   @ApiProperty({
-    description: 'Имя профиля',
+    description: 'Имя',
     required: true,
   })
   @IsString()
-  @MinLength(1, { message: DtoMessages.minLength })
-  @MaxLength(30, { message: DtoMessages.maxLength })
-  username: string;
+  @MinLength(3, { message: DtoMessages.minLength })
+  @MaxLength(40, { message: DtoMessages.maxLength })
+  name: string;
 }

@@ -48,20 +48,6 @@ export class AuthRepository {
     }
   }
 
-  async findUsername(username: string): Promise<IUser | undefined> {
-    try {
-      const user = await this.userRepository.findOne({
-        where: { username },
-      });
-      return user;
-    } catch (error) {
-      if (error instanceof Error) {
-        this.logger.error(`${this.findUserByEmail.name} - ${error.message}`);
-      }
-      throw new InternalServerErrorException();
-    }
-  }
-
   async findToken(id: string): Promise<IPasswordTokenReset | undefined> {
     try {
       const result = await this.tokenRepository.findOne({

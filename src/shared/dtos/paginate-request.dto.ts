@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { DefaultPageLimit, IPaginationRequest } from '../models/pagination.models';
+import { DefaultPageLimit, IPaginationRequest } from '../interfaces/pagination.interface';
 import { IsInt, IsOptional } from 'class-validator';
 import { Type } from 'class-transformer';
 

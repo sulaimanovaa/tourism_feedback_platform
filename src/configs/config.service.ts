@@ -1,6 +1,6 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService as NestConfigService } from '@nestjs/config';
-import { IConfigService } from '../shared/models/config.models';
+import { IConfigService } from '../shared/interfaces/config.interface';
 
 @Injectable()
 export class ConfigService implements IConfigService {

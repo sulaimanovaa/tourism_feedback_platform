@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { IUpdateUser, IUser } from './interfaces/users.interface';
 import { UserRepository } from './users.repository';
 import { UploadService } from 'modules/upload/upload.service';
@@ -30,6 +30,10 @@ export class UsersService {
       throw new ForbiddenException('Вы не можете редактировать чужой профиль');
     }
 
+    if (dto.username && await this.userRepository.findUsername(dto.username)) {
+      throw new ConflictException('Пользователь с таким username уже существует.');
+    }
+
     const updatedUser = {
       ...user,
       ...dto,
@@ -40,11 +44,9 @@ export class UsersService {
     return updatedUser;
   }
 
-  public async remove(userId: string, id: string): Promise<void> {
-    const user = await this.findById(id);
-    if (user.id !== userId) {
-      throw new ForbiddenException('Вы не можете редактировать чужой профиль');
-    }
+  public async remove(userId: string): Promise<void> {
+    const user = await this.findById(userId);
+
     const deletedUser = {
       ...user,
       id: userId,

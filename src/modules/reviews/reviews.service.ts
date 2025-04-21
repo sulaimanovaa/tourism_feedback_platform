@@ -90,13 +90,7 @@ export class ReviewsService {
       throw new ForbiddenException('Вы не можете редактировать чужой отзыв');
     }
 
-    const deleted = {
-      ...review,
-      id: review.id,
-      isDeleted: true,
-      updatedAt: new Date(),
-    };
-    await this.reviewRepository.update(deleted);
+    await this.reviewRepository.delete(review);
   }
 
   private isEditableWithin(createdAt: Date, hoursLimit = 24): boolean {
@@ -119,7 +113,7 @@ export class ReviewsService {
     if (files && Object.keys(files).length) {
       let uploadedImageUrls: string[] = [];
       uploadedImageUrls = (
-        await this.uploadService.uploadMultipleImages(files['reviewImages'])
+        await this.uploadService.uploadMultipleImages(files['images'])
       ).map((res) => res.secure_url);
 
       review.photos = uploadedImageUrls;

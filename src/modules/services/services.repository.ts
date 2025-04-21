@@ -1,7 +1,7 @@
 import { InternalServerErrorException, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { IListResponse } from 'shared/models/pagination.models';
+import { IListResponse } from 'shared/interfaces/pagination.interface';
 import { ServiceEntity } from 'entities/services.entity';
 import {
   ICreateService,
@@ -102,13 +102,6 @@ export class ServiceRepository {
 
   async findAllServices(query: PageOptionsServiceDto): Promise<IListResponse<IService>> {
     const queryBuilder = this.serviceRepository.createQueryBuilder('service');
-
-    if (query.sortBy === ServiceSortByEnum.POPULARITY) {
-      queryBuilder
-        .leftJoin('saved_service', 'saved', 'saved.serviceId = service.id')
-        .addSelect('COUNT(saved.id)', 'popularityScore')
-        .groupBy('service.id');
-    }
 
     if (query.category) {
       queryBuilder.andWhere('service.category = :category', { category: query.category });

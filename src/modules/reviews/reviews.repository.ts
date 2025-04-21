@@ -99,6 +99,17 @@ export class ReviewRepository {
     }
   }
 
+  public async delete(props: IReview): Promise<void> {
+    try {
+      await this.reviewRepository.remove(props);
+    } catch (error) {
+      if (error instanceof Error) {
+        this.logger.error(`${this.delete.name} - ${error.message}`);
+      }
+      throw new InternalServerErrorException();
+    }
+  }
+
   async getReviews(serviceId: string, query: PageOptionsReviewDto): Promise<IListResponseReviews> {
     const queryBuilder = this.reviewRepository
       .createQueryBuilder('review')

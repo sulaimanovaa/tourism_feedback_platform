@@ -13,7 +13,6 @@ export enum LikedAspectEnum {
   CHILD_FRIENDLY = 'child_friendly',
   SERVICE_QUALITY = 'service_quality',
   EXPERIENCE = 'interesting_expirience',
-  OTHER = 'OTHER',
 }
 
 export enum ReviewFilterType {

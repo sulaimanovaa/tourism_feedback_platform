@@ -20,7 +20,7 @@ import { ApiGetServiceById } from './decorators/get-service-by-id.decorator';
 import { ApiUpdateService } from './decorators/update-service.decorator';
 import { ApiDeleteService } from './decorators/delete-service.decorator';
 import { IService } from './interfaces/services.interface';
-import { IListResponse } from 'shared/models/pagination.models';
+import { IListResponse } from 'shared/interfaces/pagination.interface';
 import { PageOptionsServiceDto } from './dto/page-options-service.dto';
 import { CurrentUserId } from 'shared/decorators/current-user.decorator';
 import { ApiBearerAuth } from '@nestjs/swagger';
@@ -50,7 +50,7 @@ export class ServicesController {
 
   @ApiGetServiceById()
   @Get(':id')
-  async findOne(@Param('id') id: string): Promise<IService> {
+  async findOne(@Param('id', new ParseUUIDPipe()) id: string): Promise<IService> {
     const service = await this.servicesService.findById(id);
     return service;
   }
@@ -63,15 +63,14 @@ export class ServicesController {
     return service;
   }
 
-  @ApiUploadImage()
   @ApiDeleteService()
   @Delete(':id')
   @UseGuards(AuthGuard)
   async remove(
     @CurrentUserId() user,
-    @Param('userId', new ParseUUIDPipe()) userId: string,
+    @Param('id', new ParseUUIDPipe()) id: string,
   ): Promise<void> {
-    const service = await this.servicesService.remove(user, userId);
+    const service = await this.servicesService.remove(user, id);
     return service;
   }
 

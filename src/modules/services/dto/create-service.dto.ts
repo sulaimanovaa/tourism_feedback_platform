@@ -19,7 +19,7 @@ export class CreateServiceDto implements ICreateService {
     description: 'Название услуги',
   })
   @MinLength(5, { message: DtoMessages.minLength })
-  @MaxLength(20, { message: DtoMessages.maxLength })
+  @MaxLength(100, { message: DtoMessages.maxLength })
   @IsString()
   title: string;
 
@@ -32,21 +32,12 @@ export class CreateServiceDto implements ICreateService {
   description: string;
 
   @ApiPropertyOptional({
-    description: 'Фотографии',
-    isArray: true,
-  })
-  @IsOptional()
-  @IsArray()
-  @ArrayMaxSize(3, { message: DtoMessages.maxLengthArray })
-  photos?: [];
-
-  @ApiPropertyOptional({
     description: 'Ссылка на источник/компанию',
     required: false,
   })
   @IsOptional()
   @IsString()
-  sourceUrl?: string;
+  contactInfo?: string;
 
   @ApiPropertyOptional({
     description: 'Цена за услугу',

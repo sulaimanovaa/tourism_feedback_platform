@@ -37,9 +37,8 @@ export class UsersController {
   @UseGuards(AuthGuard)
   async deleteUser(
     @CurrentUserId() userId,
-    @Param('id', new ParseUUIDPipe()) id: string,
   ): Promise<void> {
-    await this.usersService.remove(userId, id);
+    await this.usersService.remove(userId);
   }
 
   @ApiUploadImage()

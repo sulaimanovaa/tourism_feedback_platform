@@ -40,21 +40,12 @@ export class UpdateServiceDto implements IUpdateService {
   description: string;
 
   @ApiPropertyOptional({
-    description: 'файлы',
-    isArray: true,
-  })
-  @IsOptional()
-  @IsArray()
-  @ArrayMaxSize(3, { message: DtoMessages.maxLengthArray })
-  photos?: [];
-
-  @ApiPropertyOptional({
     description: 'Ссылка на источник/компанию',
     required: false,
   })
   @IsOptional()
   @IsString()
-  sourceUrl?: string;
+  contactInfo?: string;
 
   @ApiPropertyOptional({
     description: 'Цена за услугу',

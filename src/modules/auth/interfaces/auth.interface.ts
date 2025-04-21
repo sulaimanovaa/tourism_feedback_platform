@@ -29,3 +29,7 @@ export interface IRegistUser
   extends Pick<IUser, 'email' | 'password' | 'username' | 'isVerified'> {}
 
 export interface ILogin extends Pick<IUser, 'email' | 'password'> {}
+
+export interface IOutputMessage {
+  message: string;
+}

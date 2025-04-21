@@ -1,12 +1,12 @@
 import { IUser } from 'modules/users/interfaces/users.interface';
-import { IDefaultDocument } from 'shared/models/default-document.models';
+import { IDefaultDocument } from 'shared/interfaces/default-document.interface';
 import { LocationEnum, ServiceCategoryEnum } from './services.enums';
 
 export interface IService extends IDefaultDocument {
   title: string;
   description?: string;
   photos?: string[];
-  sourceUrl?: string;
+  contactInfo?: string;
   price?: number;
   category: ServiceCategoryEnum;
   duration?: string;
@@ -21,8 +21,7 @@ export interface ICreateService
     IService,
     | 'title'
     | 'description'
-    | 'photos'
-    | 'sourceUrl'
+    | 'contactInfo'
     | 'price'
     | 'category'
     | 'duration'
@@ -36,8 +35,7 @@ export interface IUpdateService {
   id: string;
   title?: string;
   description?: string;
-  photos?: string[];
-  sourceUrl?: string;
+  contactInfo?: string;
   price?: number;
   category?: ServiceCategoryEnum;
   duration?: string;

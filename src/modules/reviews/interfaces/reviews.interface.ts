@@ -1,6 +1,6 @@
 import { IService } from 'modules/services/interfaces/services.interface';
 import { IUser } from 'modules/users/interfaces/users.interface';
-import { IDefaultDocument } from 'shared/models/default-document.models';
+import { IDefaultDocument } from 'shared/interfaces/default-document.interface';
 import { LikedAspectEnum, UsageType } from './reviews.enum';
 
 export interface IReview extends IDefaultDocument {

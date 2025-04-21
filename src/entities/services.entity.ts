@@ -10,6 +10,7 @@ import {
 import { UserEntity } from './users.entity';
 import { ReviewEntity } from './reviews.entity';
 import { LocationEnum, ServiceCategoryEnum } from 'modules/services/interfaces/services.enums';
+import { SavedServiceEntity } from './saved-service.entity';
 
 @Entity('services')
 export class ServiceEntity {
@@ -26,9 +27,9 @@ export class ServiceEntity {
   photos?: string[];
 
   @Column({ nullable: true })
-  sourceUrl?: string;
+  contactInfo?: string;
 
-  @Column({ type: 'decimal', nullable: true })
+  @Column({ type: 'decimal', precision: 10, scale: 2, nullable: true })
   price?: number;
 
   @Column({
@@ -57,6 +58,9 @@ export class ServiceEntity {
 
   @OneToMany(() => ReviewEntity, (review) => review.service)
   reviews: ReviewEntity[];
+
+  @OneToMany(() => SavedServiceEntity, (saved) => saved.service)
+  savedServices: SavedServiceEntity[];
 
   @Column({ default: false })
   isDeleted: boolean;
